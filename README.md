@@ -12,23 +12,18 @@ HEIC / HEIF画像をJPGに変換する、Windows向けのシンプルなデス�
 
 画像はPC内で処理します。画像のアップロードや外部サービスへの送信は行いません。元のHEICファイルも変更しません。
 
-## 起動方法
+## ダウンロードして使う（Windows x64）
 
-このリポジトリではソースコードを公開しています。配布用EXEは含まれていません。
+**[Windows用ZIPをダウンロード](https://github.com/cac-gwd/heic-to-jpg/releases/latest/download/HEIC-to-JPG-v1.0.0-windows-x64.zip)**
 
-Windows 64bit版のPython 3.9以降と、Tcl/Tk（tkinter）が必要です。開発時の変換確認にはPython 3.9を使用しました。Pythonの公式インストーラーでは、Tcl/Tkのインストールを有効にしてください。
+1. ZIPを右クリックして「すべて展開」を選びます。
+2. 展開先の `HEIC-to-JPG` フォルダを開きます。
+3. `HEIC-to-JPG.exe` をダブルクリックします。
 
-PowerShellで以下を実行します。
+Pythonや追加コーデックのインストールは不要です。変換時のインターネット接続も不要です。
+`_internal` は実行に必要なフォルダなので、EXEと一緒に保管してください。
 
-```powershell
-git clone https://github.com/cac-gwd/heic-to-jpg.git
-cd heic-to-jpg
-python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe heic_to_jpg.py
-```
-
-依存ライブラリのインストール時にはインターネット接続が必要です。変換時には不要です。
+[リリース一覧](https://github.com/cac-gwd/heic-to-jpg/releases) にZIP、チェックサム、依存ライブラリの対応ソースを掲載しています。通常の利用には `windows-x64.zip` だけをダウンロードしてください。
 
 ## 使い方
 
@@ -39,18 +34,28 @@ python -m venv .venv
 
 例：`photo.heic` は `photo.jpg` になります。すでに同名のファイルがある場合は、`photo_1.jpg`、`photo_2.jpg` のように保存します。
 
-## Windows用EXEの作成
+## ソースコードから起動・ビルドする
 
-公式PythonのTcl/Tkが利用できる環境で、次のコマンドを実行してください。
+Windows 64bit版のPython 3.10以降とTcl/Tk（tkinter）が必要です。公開EXEはPython 3.12でビルドしています。公式PythonインストーラーではTcl/Tkを有効にしてください。
+
+```powershell
+git clone https://github.com/cac-gwd/heic-to-jpg.git
+cd heic-to-jpg
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\python.exe heic_to_jpg.py
+```
+
+EXEと配布ZIPを作成するには、次のコマンドを実行します。
 
 ```powershell
 .\.venv\Scripts\python.exe -m pip install -r requirements-build.txt
-.\.venv\Scripts\python.exe -m PyInstaller --noconfirm --onefile --windowed --name HEIC-to-JPG --collect-all pillow_heif --exclude-module numpy heic_to_jpg.py
+.\.venv\Scripts\python.exe scripts/build_release.py --version 1.0.0
 ```
 
-`dist/HEIC-to-JPG.exe` が生成されます。作成後のEXEはPythonをインストールしていないPCでも起動できる形式です。別PCでの動作は、そのPCで確認してください。
+`dist/HEIC-to-JPG-v1.0.0-windows-x64.zip` が生成されます。EXE、依存DLL、使い方、ライセンス、アプリのソースを含むフォルダ形式です。
 
-生成したEXEには依存ライブラリも同梱されます。EXEを第三者へ再配布するときの依存関係については、[THIRD_PARTY.md](THIRD_PARTY.md) を確認してください。
+公開パッケージでは読み込み専用の `pi-heif` を使用しています。HEICエンコーダは同梱していません。依存ライブラリのライセンスと、同じリリースで提供している対応ソースについては [THIRD_PARTY.md](THIRD_PARTY.md) を参照してください。
 
 ## 動作上の制約
 
@@ -72,4 +77,4 @@ python -m venv .venv
 
 ## ライセンス
 
-このリポジトリのアプリのソースコードと文書は [MIT License](LICENSE) です。Pillow、pillow-heifなどの依存ライブラリには、それぞれ別のライセンスが適用されます。詳細は [THIRD_PARTY.md](THIRD_PARTY.md) を参照してください。
+このリポジトリのアプリのソースコードと文書は [MIT License](LICENSE) です。Pillow、pi-heifなどの依存ライブラリには、それぞれ別のライセンスが適用されます。詳細は [THIRD_PARTY.md](THIRD_PARTY.md) を参照してください。

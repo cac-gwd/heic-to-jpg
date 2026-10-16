@@ -3,7 +3,7 @@ import unittest
 from pathlib import Path
 
 from PIL import Image, UnidentifiedImageError
-import pillow_heif
+import shutil
 
 from heic_to_jpg import convert
 
@@ -16,7 +16,7 @@ class ConversionTests(unittest.TestCase):
 
     def test_real_heic_conversion_preserves_source(self):
         source = self.root / "sample.heic"
-        pillow_heif.from_pillow(Image.new("RGB", (40, 30), (200, 80, 30))).save(source)
+        shutil.copyfile(Path(__file__).parent / "fixtures" / "sample.heic", source)
         before = source.read_bytes()
         result = convert(source, self.root)
         with Image.open(result) as image:
@@ -28,7 +28,7 @@ class ConversionTests(unittest.TestCase):
 
     def test_existing_outputs_are_never_overwritten(self):
         source = self.root / "photo.heic"
-        pillow_heif.from_pillow(Image.new("RGB", (16, 16))).save(source)
+        shutil.copyfile(Path(__file__).parent / "fixtures" / "sample.heic", source)
         for filename in ("photo.jpg", "photo_1.jpg"):
             (self.root / filename).write_bytes(b"existing")
         self.assertEqual(convert(source, self.root).name, "photo_2.jpg")

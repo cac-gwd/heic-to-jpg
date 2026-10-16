@@ -4,9 +4,9 @@ import threading
 import tkinter as tk
 from tkinter import filedialog, ttk, messagebox
 from PIL import Image, ImageOps
-import pillow_heif
+import pi_heif
 
-pillow_heif.register_heif_opener()
+pi_heif.register_heif_opener()
 
 
 def convert(source, destination, quality=92):
@@ -143,9 +143,12 @@ class App:
 
 
 if __name__ == '__main__':
-    window = tk.Tk()
     import sys
+    window = tk.Tk()
     if len(sys.argv) == 4 and sys.argv[1] == '--verify':
+        window.withdraw()
+        App(window)
+        window.update_idletasks()
         convert(sys.argv[2], sys.argv[3])
         window.destroy()
     else:

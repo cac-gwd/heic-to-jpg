@@ -1,0 +1,1 @@
+sample.heic is a synthetic 40 x 30 solid-color image (RGB 200, 80, 30), generated with Pillow and pillow-heif 1.1.1. It contains no personal photo data. This test fixture is covered by the repository MIT license.

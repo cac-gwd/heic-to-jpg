@@ -13,3 +13,5 @@ dist/
 *.jpeg
 .env
 .env.*
+
+!tests/fixtures/*.heic
