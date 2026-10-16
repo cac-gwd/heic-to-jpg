@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+.venv/
+build/
+dist/
+*.spec
+*.exe
+*.heic
+*.HEIC
+*.heif
+*.HEIF
+*.jpg
+*.jpeg
+.env
+.env.*
